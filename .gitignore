@@ -1,10 +1,21 @@
+# Ignore everything
 /*
+
+# But keep these:
 !.gitignore
 !README.md
 !LICENSE
-!/docs/
-!/docs/**
-/input/**
+
+# Unignore the docs folder and its contents
+!docs/
+!docs/**
+
+# Keep the .github workflows (if you deploy with Actions)
+!.github/
+!.github/**
+
+# Ignore Eleventy source and config
+input/
 eleventy.config.js
-package-lock.json
 package.json
+package-lock.json
