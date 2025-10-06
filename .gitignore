@@ -36,7 +36,7 @@ Thumbs.db
 # Eleventy cache (if you enable it)
 .eleventycache/
 
-# OS and backup noise
+# OS and backup noi sdsse
 *.bak
 *.orig
 input/
