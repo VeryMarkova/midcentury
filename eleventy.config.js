@@ -1,9 +1,11 @@
 // eleventy.config.js (ESM)
-import { fileURLToPath } from "url";
-import path from "path";
 import markdownIt from "markdown-it";
-import pluginReadingTime from "eleventy-plugin-reading-time";
-import readingTime from "reading-time"; // ← universal filter backend
+import readingTime from "reading-time";
+
+// old plugin is CJS; load it safely under ESM
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+const pluginReadingTime = require("eleventy-plugin-reading-time");
 
 export default async function (eleventyConfig) {
   // ----- Global: filename-based permalinks; root index stays index.html
@@ -21,6 +23,7 @@ export default async function (eleventyConfig) {
           .replace(/[\u0300-\u036f]/g, "")
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/^-+|-+$/g, "") || "page";
+
       if (baseNoExt.toLowerCase() === "index" && (parent === "input" || parent === "")) {
         return "index.html";
       }
@@ -31,14 +34,13 @@ export default async function (eleventyConfig) {
     }
   });
 
-  // ----- Plugin: Reading Time (kept)
+  // ----- Plugin: Reading Time (kept for compatibility)
   eleventyConfig.addPlugin(pluginReadingTime);
 
-  // ----- Universal Reading-Time filter ("rt")
+  // ----- Universal Reading-Time filter ("rt") using reading-time lib
   // Usage in Nunjucks:
-  //   {{ content | rt }}            → "3 min read"
-  //   {{ post | rt }}               → works on collection items
-  // Adjust WPM here if you must.
+  //   {{ content | rt }}          → "3 min read"
+  //   {{ post | rt }}             → works on collection items
   const WPM = 220;
   eleventyConfig.addFilter("rt", input => {
     const src =
@@ -46,7 +48,7 @@ export default async function (eleventyConfig) {
       String(input ?? "");
     const stats = readingTime(src, { wordsPerMinute: WPM });
     const minutes = Math.max(1, Math.ceil(stats.minutes));
-    return `${minutes} minutes`;
+    return `${minutes} min read`;
   });
 
   // ----- Passthroughs
@@ -67,8 +69,8 @@ export default async function (eleventyConfig) {
   // ----- Markdown-it
   const md = markdownIt({ html: true, breaks: true, linkify: true });
   eleventyConfig.setLibrary("md", md);
-  eleventyConfig.addPairedShortcode("md", (content) => md.render(content));
-  eleventyConfig.addFilter("md", (str) => md.render(str ?? ""));
+  eleventyConfig.addPairedShortcode("md", content => md.render(content));
+  eleventyConfig.addFilter("md", str => md.render(str ?? ""));
 
   // ----- HTML minify transform
   const { minify } = await import("html-minifier-terser");
@@ -89,7 +91,7 @@ export default async function (eleventyConfig) {
   return {
     dir: {
       input: "input",
-      output: "docs",
+      output: "output",
       includes: "_includes",
       data: "_data"
     },

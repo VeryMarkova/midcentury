@@ -7,7 +7,7 @@ meta: ( Midcentury lore, robots, and more. )
 permalink: index.html
 ---
 
-In the middle of the twentieth century, the office was a quiet stage for repetition. Desks arranged like arithmetic, papers passed like signals in a slow telegraph. The hum of fluorescent lights, the rattle of a typewriter carriage, the soft complaint of carbon paper — all part of a ritual that promised permanence through paperwork. Every sheet was a small claim to existence. To file was to prove you had been.
+In the middle of the twentieth century, the office was a quiet stage for repetition. Desks arranged like arithmetic, papers passed like signals in a slow telegraph. The hum of fluorescent lights, the rattle of a typewriter carriage, the soft complaint of carbon paper — all part of a ritual that promised permanence through paperwork. Every sheet was a small claim to existence. To file was to prove you had been. What?
 
 When computers arrived, they mimicked the office out of politeness. Folders, desktops, documents, trash. The metaphors stayed so the humans would not panic. They called their screens “windows,” as if the view might still open onto something outside. Yet behind those windows, the logic of work changed from the mechanical to the invisible. A secretary might once have known where every letter was kept. Now, even she would have to ask the search bar.
 

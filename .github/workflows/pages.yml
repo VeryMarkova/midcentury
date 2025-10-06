@@ -24,18 +24,19 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
-      - run: npm ci
+      # Use ci if you have a lockfile; otherwise fall back to install
+      - run: npm ci || npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs   # publish the CONTENTS of /doc
+          path: output
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.docs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}   # ← outputs, plural
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4

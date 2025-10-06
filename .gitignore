@@ -7,8 +7,8 @@
 !LICENSE
 
 # Unignore the docs folder and its contents
-!docs/
-!docs/**
+!output/
+!output/**
 
 # Keep the .github workflows (if you deploy with Actions)
 !.github/

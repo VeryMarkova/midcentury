@@ -4,18 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "eleventy --input=input --output=docs --serve --watch",
-    "build": "rm -rf docs && eleventy --input=input --output=docs",
-    "clean": "rm -rf docs",
+    "dev": "npx @11ty/eleventy --input=input --output=output --serve --watch",
+    "build": "rm -rf output && npx @11ty/eleventy --input=input --output=output",
+    "clean": "rm -rf output",
     "start": "npm run clean && npm run dev"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy": "^3.1.2",
     "html-minifier-terser": "^7.2.0"
   },
   "dependencies": {
-    "eleventy": "^1.0.7",
     "eleventy-plugin-reading-time": "^0.0.1",
+    "markdown-it": "^14.1.0",
     "reading-time": "^1.5.0"
   }
 }
