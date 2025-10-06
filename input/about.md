@@ -1,12 +1,10 @@
 ---
 layout: /base.njk
-title: About
+title: What and Why
 description: What this site is for, in plain words.
 kind: essay
 date: 2025-10-04
 ---
-
-# About this site
 
 The site explores artificial intelligence, language models, and midcentury design habits that age well.
 Everything builds with **11ty**, no bundlers. Typography first, fussiness later.
