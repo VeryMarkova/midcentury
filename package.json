@@ -1,0 +1,22 @@
+{
+  "name": "very-markova-11ty-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --input=input --output=output --serve --watch",
+    "build": "npx @11ty/eleventy --input=input --output=output",
+    "clean": "rm -rf output",
+    "deploy": "npm run build && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\"",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "gh-pages": "^6.1.1",
+    "html-minifier-terser": "^7.2.0"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "reading-time": "^1.5.0"
+  }
+}
