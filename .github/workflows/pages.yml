@@ -28,14 +28,14 @@ jobs:
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs   # publish the CONTENTS of /output
+          path: docs   # publish the CONTENTS of /doc
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.docs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
