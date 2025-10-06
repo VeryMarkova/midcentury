@@ -1,6 +1,6 @@
 # Very Markova — Rudimentary 11ty Theme
 
-**Manifest by Cathy and Sylvia.** One layout, no collections, Nunjucks everywhere, and URLs ending with the slugified title plus `.html`. Markdown is on. Assets are passed through as-is. HTML/CSS/JS are minified on build.
+**Manifest by Cathy and Anna.** One layout, no collections, Nunjucks everywhere, and URLs ending with the slugified title plus `.html`. Markdown is on. Assets are passed through as-is. HTML/CSS/JS are minified on build.
 
 ## Quick start
 
