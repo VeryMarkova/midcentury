@@ -1,42 +1,40 @@
-# .github/workflows/pages.yml
-name: Deploy Eleventy to GitHub Pages
+name: Deploy 11ty to gh-pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]   # change if your default branch is different
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      # Use ci if you have a lockfile; otherwise fall back to install
-      - run: npm ci || npm install
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: output
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}   # ← outputs, plural
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Add .nojekyll
+        run: touch output/.nojekyll
+
+      - name: Deploy only /output to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: output
+          publish_branch: gh-pages
+          force_orphan: true
+          enable_jekyll: false
