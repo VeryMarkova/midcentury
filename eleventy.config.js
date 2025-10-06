@@ -89,7 +89,7 @@ export default async function (eleventyConfig) {
   return {
     dir: {
       input: "input",
-      output: "output",
+      output: "docs",
       includes: "_includes",
       data: "_data"
     },

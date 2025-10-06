@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "eleventy --input=input --output=output --serve --watch",
-    "build": "rm -rf output && eleventy --input=input --output=output",
-    "clean": "rm -rf output",
+    "dev": "eleventy --input=input --output=docs --serve --watch",
+    "build": "rm -rf docs && eleventy --input=input --output=docs",
+    "clean": "rm -rf docs",
     "start": "npm run clean && npm run dev"
   },
   "devDependencies": {

@@ -1,7 +1,9 @@
 # .github/workflows/pages.yml
 name: Deploy Eleventy to GitHub Pages
+
 on:
-  push: { branches: [ main ] }
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -10,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -23,10 +25,11 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
       - run: npm ci
-      - run: npm run build   # or build:gh if you need --pathprefix
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: output       # ← publish CONTENTS of /output/ to site root
+          path: docs   # publish the CONTENTS of /output
+
   deploy:
     needs: build
     runs-on: ubuntu-latest

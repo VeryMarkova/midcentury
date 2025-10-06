@@ -1,42 +1,6 @@
-# Eleventy build output
-output/
-
-# Node.js dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# macOS cruft
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# VS Code and other editor folders
-.vscode/
-.idea/
-*.code-workspace
-
-# System and temdfsdorary files
-Thumbs.db
-.sass-cache/
-.cache/
-.tmp/
-*.swp
-*.swo
-
-# Logs
-*.log
-
-# Eleventy cache (if you enable it)
-.eleventycache/
-
-# OS and backup noi sdsse
-*.bak
-*.orig
-input/
+/*
+!.gitignore
+!README.md
+!LICENSE
+!/docs/
+!/docs/**
