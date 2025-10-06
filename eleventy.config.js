@@ -25,7 +25,7 @@ export default async function (eleventyConfig) {
     const src = (input && typeof input === "object" && (input.templateContent || input.content)) || String(input ?? "");
     const stats = readingTime(src, { wordsPerMinute: WPM });
     const minutes = Math.max(1, Math.ceil(stats.minutes));
-    return `${minutes} min read`;
+    return `${minutes}`;
   });
 
   eleventyConfig.addPassthroughCopy({ "input/image": "image" });
