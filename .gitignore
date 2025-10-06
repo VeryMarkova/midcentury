@@ -39,4 +39,4 @@ Thumbs.db
 # OS and backup noise
 *.bak
 *.orig
-output/
+input/
