@@ -22,7 +22,7 @@ yarn-error.log*
 .idea/
 *.code-workspace
 
-# System and temporary files
+# System and temdfsdorary files
 Thumbs.db
 .sass-cache/
 .cache/
