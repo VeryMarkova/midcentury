@@ -1,6 +1,0 @@
-{
-    "eleventyComputed": {
-        "description": "{{ description or meta or site.description }}",
-        "meta": "{{ meta or description or site.description }}"
-    }
-}
