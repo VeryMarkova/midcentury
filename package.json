@@ -7,11 +7,9 @@
     "deploy": "npm run build && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0",
-    "gh-pages": "^6.1.1",
-    "html-minifier-terser": "^7.2.0"
-  },
-  "dependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "gh-pages": "^6.3.0",
+    "html-minifier-terser": "^7.2.0",
     "markdown-it": "^14.1.0",
     "reading-time": "^1.5.0"
   }
