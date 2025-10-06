@@ -9,7 +9,7 @@
             {% if kind == "essay" %}
             <h1 id="page-title">{{ title or site.title }}</h1>
             {% else %}
-            <h1 id="name">{{ site.name or site.title }}</h1>
+            <h1 id="site-name">{{ site.name or site.title }}</h1>
             {% endif %}
             <div class="rule" aria-hidden="true"></div>
             <p id="meta">( {{ description or site.tagline }} )

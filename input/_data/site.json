@@ -1,10 +1,10 @@
 {
-  "title": "Very Markova",
+  "title": "Midcentury Now",
   "name": "Midcentury Now",
-  "description": "Very Markova \u2014 midcentury typography, quiet colors, and disciplined layout.",
+  "description": "...some scholars date this site to the early or mid-21st century, but this may be spurious...",
   "author": "Cathy",
   "url": "https://midcentury.now",
   "theme": "cream",
-  "tagline": "( Midcentury lore, robots, and more. )",
+  "tagline": "...some scholars date this site to the early or mid-21st century, but this may be spurious...",
   "sidebar": "A stubborn manifesto placeholder. Replace me in input/_data/site.json."
 }

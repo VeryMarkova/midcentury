@@ -1,9 +1,7 @@
 ---
 layout: base.njk
 title: Midcentury Now
-description: Very Markova — midcentury typography, quiet colors, and disciplined layout.
 kind: home
-meta: ( Midcentury lore, robots, and more. )
 permalink: index.html
 ---
 
