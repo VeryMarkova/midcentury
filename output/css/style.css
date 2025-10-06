@@ -1,0 +1,617 @@
+/* ================== Very Markova — Midcentury CSS
+   (body-grid, mobile drawer, higher-contrast, zippy headers, no title underline) ================== */
+
+/* Fonts FIRST */
+@import url('https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+/* ------------------ Tokens (richer default palette) ------------------ */
+:root {
+    /* nudged warmer/darker for real contrast */
+    --paper: #efe6d6;
+    --ink: #1e1916;
+    --muted: #4f4841;
+    --accent: #6a2f23;
+    --accent-2: #155a49;
+    --accent-3: #a57517;
+    --rule: #bfae95;
+
+    /* UPDATED: Goudy needs air */
+    --lh: 1.6;
+
+    --font-serif: "Sorts Mill Goudy", Garamond, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --maxw: 78rem;
+    --r: 10px;
+
+    /* type scale */
+    --body-size: 1.125rem;
+    /* ~18px */
+    --h1: 2.5rem;
+    --h2: 2rem;
+    --h3: 1.5rem;
+
+    /* slightly darker backgrounds for structure depth */
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
+    --bg-card: color-mix(in oklab, var(--paper) 85%, white);
+    --bg-card-2: color-mix(in oklab, var(--paper) 80%, white);
+    --bg-sweet: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
+        linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
+        repeating-linear-gradient(to right,
+            color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
+            color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
+}
+
+/* rem baseline + language hint for hyphenation engines */
+html {
+    font-size: 100%;
+    /* 1rem = 16px */
+    hyphens: auto;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: auto;
+    /* was 100% */
+    min-height: 100%;
+}
+
+/* ------------------ Base ------------------ */
+body {
+    display: grid;
+    grid-template-columns: 1fr clamp(15rem, 30%, 24rem);
+    grid-template-areas:
+        "buttons buttons"
+        "main    aside"
+        "footer  aside";
+    grid-template-rows: auto;
+
+    align-items: start;
+    align-content: start;
+    /* prevent rows from stretching to fill viewport */
+    gap: 1rem;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: 1rem;
+
+    /* light mode background gets a subtle warm tint, not just gray haze */
+    background:
+        radial-gradient(1200px 600px at 18% -10%, color-mix(in oklab, var(--accent-3) 12%, transparent) 0, transparent 60%),
+        radial-gradient(1000px 500px at 120% 10%, color-mix(in oklab, var(--accent) 8%, transparent) 0, transparent 55%),
+        var(--paper);
+    color: var(--ink);
+
+    /* UPDATED: rem sizing + unitless line-height for inheritance */
+    font-family: var(--font-serif);
+    font-size: var(--body-size);
+    line-height: var(--lh);
+    letter-spacing: .01em;
+    text-rendering: optimizeLegibility;
+}
+
+/* Global text defaults: justified with sensible breaks */
+main,
+article,
+section,
+p,
+li,
+blockquote,
+figcaption {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+/* keep paragraphs from welding together */
+p+p {
+    margin-top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ------------------ Toolbar ------------------ */
+#buttons {
+    grid-area: buttons;
+    align-self: start;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .5rem;
+    padding: .25rem .75rem;
+    margin: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-soft);
+    padding: .5rem 1rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+
+    justify-content: flex-end;
+    min-height: 0;
+}
+
+button,
+#buttons a {
+    border-color: color-mix(in oklab, var(--rule) 78%, var(--ink));
+    background: transparent;
+}
+
+button:where(:hover, :focus-visible),
+#buttons a:where(:hover, :focus-visible) {
+    background: color-mix(in oklab, var(--accent-2) 16%, var(--bg-softer));
+}
+
+#buttons a,
+#buttons p,
+#buttons button {
+    appearance: none;
+    cursor: pointer;
+    padding: .4rem .6rem .2rem .4rem;
+    border: 1px solid color-mix(in oklab, var(--rule) 85%, var(--ink));
+    border-radius: var(--r);
+    background: transparent;
+    text-decoration: none;
+    color: var(--ink);
+    font: 400 1rem/1 var(--font-serif);
+    letter-spacing: .04em;
+    margin: 0;
+    white-space: nowrap;
+}
+
+#buttons p {
+    border: 0;
+    padding-top: .5rem;
+}
+
+#buttons a:where(:hover, :focus-visible),
+#buttons button:where(:hover, :focus-visible) {
+    background: color-mix(in oklab, var(--accent-2) 8%, var(--bg-softer));
+}
+
+@media (min-width: 881px) {
+    [data-hide-lg] {
+        display: none !important;
+    }
+}
+
+/* ------------------ Grid areas ------------------ */
+main {
+    grid-area: main;
+}
+
+aside {
+    grid-area: aside;
+}
+
+footer {
+    grid-area: footer;
+}
+
+/* ------------------ Headers ------------------ */
+#page-header {
+    padding: .9rem 1rem 1.2rem;
+    border: 1.5px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-softer);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+}
+
+/* ===== Essay header (kicker, title, dek, meta, spacer) ===== */
+#page-header[data-kind="essay"] #site-name,
+#page-header[data-kind="essay"] #site-tag {
+    display: none;
+}
+
+#meta {
+    display: inline-block;
+    margin: .1rem 0 0rem;
+    /* fixed: was 'rem 0 .5rem' */
+    padding: .15rem 0rem 0em;
+    font: 400 1rem/var(--lh) var(--font-serif);
+    letter-spacing: .1em;
+    text-transform: lowercase;
+    color: color-mix(in oklab, var(--accent-2) 82%, var(--ink));
+    background: color-mix(in oklab, var(--paper) 88%, white);
+    border-radius: calc(var(--r) - 4px);
+}
+
+#page-header[data-kind="essay"] #page-title {
+    margin: 0 0 .0rem;
+    font-weight: 700;
+    padding: 0;
+    font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: .006em;
+}
+
+#page-header[data-kind="essay"] [data-dek] {
+    max-width: 65ch;
+    margin: .25rem 0 .55rem;
+    color: color-mix(in oklab, var(--muted) 92%, var(--ink));
+    font-style: italic;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+}
+
+/* beloved spacer line */
+#page-header .rule {
+    height: 11px;
+    margin: .5rem 0 1rem;
+    background: var(--bg-sweet);
+    mask: linear-gradient(to right, #000 0%, #000 40%, transparent);
+    opacity: .95;
+}
+
+/* Compact tweaks for phones */
+@media (max-width: 600px) {
+    #page-header {
+        padding: .9rem .95rem 1rem;
+    }
+
+    #page-header[data-kind="essay"] #page-title {
+        margin: 0 0 .0rem;
+        font-weight: 700;
+        padding: 0;
+        font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
+        line-height: 1.1;
+        letter-spacing: .006em;
+    }
+
+    #page-header .rule {
+        height: 10px;
+        margin-top: .55rem;
+    }
+}
+
+/* ===== Homepage masthead (site name, tag, spacer) ===== */
+#page-header:not([data-kind="essay"]) #site-name {
+    margin: 0 0 .0rem;
+    font-weight: 700;
+    padding: 0;
+    font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: .006em;
+}
+
+#page-header:not([data-kind="essay"]) #site-tag {
+    margin: 0 0 .5rem;
+    color: color-mix(in oklab, var(--muted) 90%, var(--ink));
+    font-style: italic;
+    font-size: 1.075rem;
+    line-height: 1.45;
+    letter-spacing: .015em;
+    max-width: 70ch;
+}
+
+/* ------------------ Content ------------------ */
+main article {
+    margin-top: 1rem;
+    padding: .5rem 1rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-card);
+}
+
+/* Headings: rem/ratio, not px */
+main h1 {
+    margin: .2rem 0 0rem;
+    padding: 0;
+    font-size: clamp(1.375rem, 1rem + 1.8vw, 1.9rem);
+    line-height: 1.2;
+}
+
+main h2 {
+    margin: 1rem 0;
+    font-weight: 700;
+    font-size: var(--h2);
+    /* 2rem */
+    line-height: 1.3;
+    letter-spacing: .01em;
+    font-family: "Sorts Mill Goudy", "Goudy Bookletter 1911", serif;
+}
+
+main h3 {
+    margin: .75rem 0;
+    font-weight: 700;
+    font-size: var(--h3);
+    /* 1.5rem */
+    line-height: 1.35;
+    letter-spacing: .01em;
+}
+
+.lead {
+    margin: 0 0 0rem;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+}
+
+article p {
+    margin: 1rem 0 0;
+    padding: 0;
+}
+
+
+
+/* Cards and grids */
+[data-card] {
+    padding: 0 1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-card);
+
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-rows: min-content auto min-content;
+    /* cleaned duplicate */
+    margin-top: 1rem;
+}
+
+/* ------------------ Sidebar ------------------ */
+aside {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    height: fit-content;
+    padding: 0;
+    z-index: 1;
+}
+
+/* ------------------ Sidebar: Ledger navigation ------------------ */
+nav[data-nav="ledger"] {
+    --leader: currentColor;
+    margin: 0 0 1rem;
+    padding: 1rem .25rem 1rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-soft);
+}
+
+nav[data-nav="ledger"] [data-sec] {
+    margin: .5rem 0 .25rem;
+    font: small-caps 700 .9rem/1 var(--font-serif);
+    letter-spacing: .08em;
+    color: var(--accent-2);
+}
+
+nav[data-nav="ledger"] ol {
+    list-style: none;
+    margin: .1rem 0 .6rem;
+    padding: 0;
+    counter-reset: item;
+}
+
+nav[data-nav="ledger"] li {
+    position: relative;
+    counter-increment: item;
+    padding-left: 2.2rem;
+}
+
+nav[data-nav="ledger"] li+li {
+    margin-top: 0;
+}
+
+nav[data-nav="ledger"] li::before {
+    content: counter(item, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: .35rem;
+    width: 1.6rem;
+    text-align: center;
+    font: 700 .8rem/1 var(--font-mono);
+    color: var(--accent);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--paper) 90%, white);
+    padding: .2rem;
+    transition: all .3s ease;
+}
+
+nav[data-nav="ledger"] a {
+    display: block;
+    padding: .4rem .6rem;
+    border-radius: var(--r);
+    position: relative;
+    text-decoration: none;
+    color: var(--ink);
+    font: small-caps 600 .95rem/1.2 var(--font-serif);
+    letter-spacing: .06em;
+    background:
+        linear-gradient(var(--leader), var(--leader)) left 100%/0 1px no-repeat,
+        radial-gradient(var(--leader) 1px, transparent 1px) 0 100%/6px 2px repeat-x;
+    transition: background-size .3s ease,
+        color .6s cubic-bezier(.25, .1, .25, 1),
+        transform .6s ease;
+}
+
+nav[data-nav="ledger"] a:where(:hover, :focus-visible),
+nav[data-nav="ledger"] a[data-current="true"] {
+    outline: 0;
+    color: var(--accent-2);
+    background-size: 100% 1px, 6px 2px;
+}
+
+nav[data-nav="ledger"] li:has(a:where(:hover, :focus-visible, [data-current="true"]))::before {
+    background: var(--accent-2);
+    color: var(--paper);
+    border-color: color-mix(in oklab, var(--accent-2) 40%, var(--rule));
+}
+
+nav[data-nav="ledger"] a:active {
+    transform: translateY(1px);
+}
+
+/* ------------------ Links and Text ------------------ */
+a {
+    color: var(--accent-2);
+}
+
+a:where(:hover, :focus-visible) {
+    color: var(--accent-3);
+}
+
+/* ------------------ Footer (left column only) ------------------ */
+footer {
+    margin: 0rem;
+    /* exact 1rem breathing room above; no forced bottom gap */
+    color: var(--muted);
+    padding: .75rem 1.2rem;
+    border: 1.5px solid var(--rule);
+    border-radius: var(--r);
+    background: var(--bg-softer);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+    font-size: .95rem;
+    line-height: 1.5;
+    font-family: var(--font-serif);
+}
+
+/* ------------------ Mobile: single column + drawer ------------------ */
+@media (max-width: 880px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "buttons"
+            "main"
+            "footer";
+        /* aside becomes a drawer */
+    }
+
+    /* Drawer */
+    aside {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: min(85vw, 24rem);
+        max-width: 24rem;
+        height: 100dvh;
+        overflow: auto;
+        transform: translateX(100%);
+        transition: transform .22s ease;
+        z-index: 60;
+        padding: 1rem;
+        border-left: 1.5px solid var(--rule);
+        background: var(--bg-softer);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+    }
+
+    body[data-nav="open"] aside {
+        transform: translateX(0);
+    }
+
+    /* Backdrop */
+    body[data-nav="open"]::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .2);
+        backdrop-filter: blur(1px);
+        z-index: 50;
+    }
+
+    /* Sidebar isn't sticky when it's a drawer */
+    body[data-nav="open"] aside {
+        position: fixed;
+        top: 0;
+    }
+}
+
+/* ------------------ Alternate palettes (light themes darkened slightly) ------------------ */
+html[data-theme="ink"] {
+    --paper: #e9dfce;
+    /* warmer, darker cream */
+    --ink: #171310;
+    /* stronger text contrast */
+    --accent: #622c20;
+    --accent-2: #165c4c;
+    --accent-3: #a67414;
+    --rule: #b9aa90;
+
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
+    --bg-card: color-mix(in oklab, var(--paper) 86%, white);
+    --bg-card-2: color-mix(in oklab, var(--paper) 81%, white);
+}
+
+html[data-theme="sage"] {
+    --paper: #e4e6da;
+    /* deepened sage */
+    --ink: #181611;
+    --accent: #4c2d22;
+    --accent-2: #2e5a47;
+    --accent-3: #927721;
+    --rule: #b7bea6;
+
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
+    --bg-card: color-mix(in oklab, var(--paper) 85%, white);
+    --bg-card-2: color-mix(in oklab, var(--paper) 80%, white);
+}
+
+/* 1) Tokens: two small switches */
+/* light/default tokens stay first (your existing :root) */
+
+
+/* explicit noir theme — no nesting, just override */
+html[data-theme="noir"] {
+    /* ——— Dark neutral-brown base ——— */
+    --paper: #3b3024;
+    --ink: #f3ede3;
+    --muted: #bfb3a5;
+    --rule: #5b5246;
+
+    --accent: #d6a23a;
+    --accent-2: #c28c2d;
+    --accent-3: #e6c067;
+
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-softer: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-card: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-card-2: color-mix(in oklab, var(--paper) 90%, white);
+
+    --lh: 1.5;
+    --focus: color-mix(in oklab, var(--accent) 70%, white);
+    --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
+    --select-ink: var(--ink);
+
+    color-scheme: dark;
+}
+
+/* optional: auto-dark fallback when no data-theme is set */
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme]) {
+        --paper: #2f2b27;
+        --ink: #f3ede3;
+        --muted: #bfb3a5;
+        --rule: #5b5246;
+        --accent: #d6a23a;
+        --accent-2: #c28c2d;
+        --accent-3: #e6c067;
+        --bg-soft: color-mix(in oklab, var(--paper) 88%, white);
+        --bg-softer: color-mix(in oklab, var(--paper) 84%, white);
+        --bg-card: color-mix(in oklab, var(--paper) 80%, white);
+        --bg-card-2: color-mix(in oklab, var(--paper) 72%, white);
+        --lh: 1.5;
+        --focus: color-mix(in oklab, var(--accent) 70%, white);
+        --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
+        --select-ink: var(--ink);
+        color-scheme: dark;
+    }
+}
