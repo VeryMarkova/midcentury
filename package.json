@@ -1,0 +1,21 @@
+{
+  "name": "very-markova-11ty-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "eleventy --input=input --output=output --serve --watch",
+    "build": "rm -rf output && eleventy --input=input --output=output",
+    "clean": "rm -rf output",
+    "start": "npm run clean && npm run dev"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "html-minifier-terser": "^7.2.0"
+  },
+  "dependencies": {
+    "eleventy": "^1.0.7",
+    "eleventy-plugin-reading-time": "^0.0.1",
+    "reading-time": "^1.5.0"
+  }
+}
