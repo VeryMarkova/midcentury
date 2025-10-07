@@ -17,7 +17,7 @@
     --rule: #bfae95;
 
     /* UPDATED: Goudy needs air */
-    --lh: 1.6;
+    --lh: 1.4;
 
     --font-serif: "Sorts Mill Goudy", Garamond, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -148,6 +148,7 @@ button,
 #buttons a {
     border-color: color-mix(in oklab, var(--rule) 78%, var(--ink));
     background: transparent;
+    text-transform: lowercase;
 }
 
 button:where(:hover, :focus-visible),
@@ -160,24 +161,24 @@ button:where(:hover, :focus-visible),
 #buttons button {
     appearance: none;
     cursor: pointer;
-    padding: .4rem .6rem .2rem .4rem;
+    height: auto;
     border: 1px solid color-mix(in oklab, var(--rule) 85%, var(--ink));
-    border-radius: var(--r);
+    border-radius: 5px;
     background: transparent;
+    text-align: center;
+    width: fit-content;
     text-decoration: none;
     color: var(--ink);
-    font: 400 1rem/1 var(--font-serif);
-    letter-spacing: .04em;
+    font: small-caps 700 1rem/ var(--lh) var(--font-serif);
+    letter-spacing: .1em;
     margin: 0;
+    padding: .2rem .5rem !important;
     white-space: nowrap;
 }
 
 #buttons p {
     border: 0;
     cursor: inherit;
-    padding-top: .5rem;
-
-    font: small-caps 700 1rem/1 var(--font-serif);
     color: var(--accent-2);
 }
 
@@ -423,7 +424,7 @@ nav[data-nav="ledger"] {
 
 nav[data-nav="ledger"] [data-sec] {
     margin: .4rem 0 0.0rem;
-    font: small-caps 700 .9rem/1 var(--font-serif);
+    font: small-caps 700 1rem/var(--lh) var(--font-serif);
     letter-spacing: .1em;
     color: var(--accent-2);
 }
@@ -451,7 +452,7 @@ nav[data-nav="ledger"] li::before {
     top: .0rem;
     width: 1.6rem;
     text-align: center;
-    font: 700 .8rem/1 var(--font-mono);
+    font: 700 .8rem/var(--lh) var(--font-mono);
     color: var(--accent);
     border: 1px solid var(--rule);
     border-radius: 3px;
@@ -467,7 +468,7 @@ nav[data-nav="ledger"] a {
     position: relative;
     text-decoration: none;
     color: var(--ink);
-    font: small-caps 600 1rem/1 var(--font-serif);
+    font: small-caps 600 1rem/var(--lh) var(--font-serif);
     letter-spacing: .06em;
     background:
         linear-gradient(var(--leader), var(--leader)) left 100%/0 1px no-repeat,
@@ -514,7 +515,7 @@ footer {
     background: var(--bg-softer);
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
 
-    font: small-caps 700 1rem/1 var(--font-serif);
+    font: small-caps 700 1rem/ var(--lh) var(--font-serif);
     letter-spacing: .1em;
     color: var(--accent-2);
 }
@@ -655,7 +656,6 @@ html[data-theme="noir"] {
         --bg-card: color-mix(in oklab, var(--paper) 90%, var(--balm));
         --bg-card-2: color-mix(in oklab, var(--paper) 90%, var(--balm));
 
-        --lh: 1.5;
         --focus: color-mix(in oklab, var(--accent) 70%, var(--balm));
         --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
         --select-ink: var(--ink);
