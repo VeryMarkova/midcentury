@@ -1,6 +1,10 @@
-// eleventy.config.js (ESM, clean)
+// eleventy.config.js (ESM, clean, gh-pages aware)
 import markdownIt from "markdown-it";
 import readingTime from "reading-time";
+
+const REPO = "very-markova-11ty-theme"; // change if you ever rename the repo
+const isProd = process.env.ELEVENTY_ENV === "production";
+const PATH_PREFIX = isProd ? `/${REPO}/` : "/";
 
 export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("eleventyComputed", {
@@ -19,6 +23,9 @@ export default async function (eleventyConfig) {
       return `${slugify(baseNoExt)}.html`;
     }
   });
+
+  // handy to reference in templates if you need absolute URLs or assets
+  eleventyConfig.addGlobalData("site", { pathPrefix: PATH_PREFIX });
 
   const WPM = 220;
   eleventyConfig.addFilter("rt", input => {
@@ -55,6 +62,6 @@ export default async function (eleventyConfig) {
     markdownTemplateEngine: "njk",
     dataTemplateEngine: "njk",
     templateFormats: ["njk", "md", "html"],
-    pathPrefix: "/very-markova-11ty-theme/"
+    pathPrefix: PATH_PREFIX
   };
 }

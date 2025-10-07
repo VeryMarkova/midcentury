@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "npx @11ty/eleventy --input=input --output=output --serve --watch",
+    "start": "npx @11ty/eleventy --input=input --output=output --serve --watch",
     "build": "npx @11ty/eleventy --input=input --output=output",
     "clean": "rm -rf output",
     "deploy": "npm run build && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
