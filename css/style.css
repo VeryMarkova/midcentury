@@ -10,7 +10,7 @@
     /* nudged warmer/darker for real contrast */
     --paper: #ece2d0;
     --ink: #1e1916;
-    --muted: #4f4841;
+    --muted: #6e3802;
     --accent: #6a2f23;
     --accent-2: #155a49;
     --accent-3: #a57517;
@@ -632,6 +632,7 @@ html[data-theme="noir"] {
     /* ——— Dark neutral-brown base ——— */
     --paper: #3b3024;
     --ink: #f3ede3;
+
     --muted: #bfb3a5;
     --rule: #5b5246;
 
@@ -652,13 +653,6 @@ html[data-theme="noir"] {
 
     color-scheme: dark;
 
-    #page-header .rule {
-        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
-            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
-            repeating-linear-gradient(to right,
-                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
-                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
-    }
 }
 
 /* optional: auto-dark fallback when no data-theme is set */
@@ -685,13 +679,6 @@ html[data-theme="noir"] {
         color-scheme: dark;
     }
 
-    #page-header .rule {
-        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
-            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
-            repeating-linear-gradient(to right,
-                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
-                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
-    }
 
 
 }
