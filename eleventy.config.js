@@ -24,15 +24,14 @@ export default async function (eleventyConfig) {
     }
   });
 
-  // handy to reference in templates if you need absolute URLs or assets
   eleventyConfig.addGlobalData("site", { pathPrefix: PATH_PREFIX });
 
   const WPM = 220;
+
   eleventyConfig.addFilter("rt", input => {
     const src = (input && typeof input === "object" && (input.templateContent || input.content)) || String(input ?? "");
-    const stats = readingTime(src, { wordsPerMinute: WPM });
-    const minutes = Math.max(1, Math.ceil(stats.minutes));
-    return `${minutes}`;
+    const minutes = Math.max(1, Math.ceil(readingTime(src, { wordsPerMinute: WPM }).minutes));
+    return `${minutes} minute${minutes === 1 ? "" : "s"}`;
   });
 
   eleventyConfig.addPassthroughCopy({ "input/image": "image" });
@@ -41,7 +40,12 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "input/js": "js" });
   eleventyConfig.addPassthroughCopy({ "input/favicon.ico": "favicon.ico" });
 
-  eleventyConfig.setNunjucksEnvironmentOptions({ throwOnUndefined: false, autoescape: true, trimBlocks: true, lstripBlocks: true });
+  eleventyConfig.setNunjucksEnvironmentOptions({
+    throwOnUndefined: false,
+    autoescape: true,
+    trimBlocks: true,
+    lstripBlocks: true
+  });
 
   const md = markdownIt({ html: true, breaks: true, linkify: true });
   eleventyConfig.setLibrary("md", md);
@@ -50,10 +54,18 @@ export default async function (eleventyConfig) {
   eleventyConfig.addShortcode("formatDate", dateObj =>
     new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(dateObj)
   );
+
   const { minify } = await import("html-minifier-terser");
   eleventyConfig.addTransform("htmlmin", async (content, outputPath) => {
     if (outputPath && outputPath.endsWith(".html")) {
-      return await minify(content, { collapseWhitespace: true, removeComments: true, minifyCSS: true, minifyJS: true, useShortDoctype: true, keepClosingSlash: true });
+      return await minify(content, {
+        collapseWhitespace: true,
+        removeComments: true,
+        minifyCSS: true,
+        minifyJS: true,
+        useShortDoctype: true,
+        keepClosingSlash: true
+      });
     }
     return content;
   });
