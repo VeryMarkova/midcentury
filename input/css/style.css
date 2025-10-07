@@ -6,7 +6,7 @@
 
 /* ------------------ Tokens (richer default palette) ------------------ */
 :root {
-    --balm: #fffbf4;
+    --balm: #fff;
     /* nudged warmer/darker for real contrast */
     --paper: #ece2d0;
     --ink: #1e1916;
@@ -257,7 +257,7 @@ footer {
     line-height: 1.45;
 }
 
-/* beloved spacer line */
+
 #page-header .rule {
     height: 11px;
     margin: .5rem 0 1rem;
@@ -265,6 +265,34 @@ footer {
     mask: linear-gradient(to right, #000 0%, #000 40%, transparent);
     opacity: .95;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Compact tweaks for phones */
 @media (max-width: 600px) {
@@ -541,7 +569,7 @@ footer {
 
 /* ------------------ Alternate palettes (light themes darkened slightly) ------------------ */
 html[data-theme="ink"] {
-    --paper: #d1c7b4;
+    --paper: #e3d5ba;
     /* warmer, darker cream */
     --ink: #171310;
     /* stronger text contrast */
@@ -583,8 +611,9 @@ html[data-theme="noir"] {
     --muted: #bfb3a5;
     --rule: #5b5246;
 
-    --accent: #d6a23a;
-    --accent-2: #c28c2d;
+
+    --accent: #e6c067;
+    --accent-2: #e6c067;
     --accent-3: #e6c067;
 
     --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
@@ -598,6 +627,14 @@ html[data-theme="noir"] {
     --select-ink: var(--ink);
 
     color-scheme: dark;
+
+    #page-header .rule {
+        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
+            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
+            repeating-linear-gradient(to right,
+                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
+                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
+    }
 }
 
 /* optional: auto-dark fallback when no data-theme is set */
@@ -608,8 +645,8 @@ html[data-theme="noir"] {
         --muted: #bfb3a5;
         --rule: #5b5246;
 
-        --accent: #d6a23a;
-        --accent-2: #c28c2d;
+        --accent: #e6c067;
+        --accent-2: #e6c067;
         --accent-3: #e6c067;
 
         --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
@@ -624,4 +661,14 @@ html[data-theme="noir"] {
 
         color-scheme: dark;
     }
+
+    #page-header .rule {
+        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
+            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
+            repeating-linear-gradient(to right,
+                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
+                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
+    }
+
+
 }
