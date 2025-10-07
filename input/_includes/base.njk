@@ -19,9 +19,11 @@
 
         <article>
             {{ content | safe }}</article>
+
+        {% include "footer.njk" -%}
     </main>
     {% include "aside.njk" -%}
-    {% include "footer.njk" -%}
+
 
 
     <script src="/js/scripts.js"></script>

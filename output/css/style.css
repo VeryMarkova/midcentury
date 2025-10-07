@@ -413,14 +413,15 @@ aside {
 nav[data-nav="ledger"] {
     --leader: currentColor;
     margin: 0 0 1rem;
-    padding: 1rem .25rem 1rem 1rem;
+    padding: 1rem;
     border: 1px solid var(--rule);
     border-radius: var(--r);
     background: var(--bg-soft);
 }
 
+
 nav[data-nav="ledger"] [data-sec] {
-    margin: .5rem 0 .0rem;
+    margin: .4rem 0 0.0rem;
     font: small-caps 700 .9rem/1 var(--font-serif);
     letter-spacing: .1em;
     color: var(--accent-2);
@@ -428,7 +429,7 @@ nav[data-nav="ledger"] [data-sec] {
 
 nav[data-nav="ledger"] ol {
     list-style: none;
-    margin: .1rem 0 .6rem;
+    margin: 0rem 1rem 1rem;
     padding: 0;
     counter-reset: item;
 }
@@ -436,19 +437,17 @@ nav[data-nav="ledger"] ol {
 nav[data-nav="ledger"] li {
     position: relative;
     counter-increment: item;
-    padding-left: 2.2rem;
-    margin-top: .2em;
+
+    padding-left: 2rem;
+    margin-top: .4rem;
 }
 
-nav[data-nav="ledger"] li+li {
-    margin-top: 0;
-}
 
 nav[data-nav="ledger"] li::before {
     content: counter(item, decimal-leading-zero);
     position: absolute;
     left: 0;
-    top: .35rem;
+    top: .0rem;
     width: 1.6rem;
     text-align: center;
     font: 700 .8rem/1 var(--font-mono);
@@ -462,12 +461,12 @@ nav[data-nav="ledger"] li::before {
 
 nav[data-nav="ledger"] a {
     display: block;
-    padding: .4rem .6rem;
+    padding: .2rem .6rem .0rem;
     border-radius: var(--r);
     position: relative;
     text-decoration: none;
     color: var(--ink);
-    font: small-caps 600 .95rem/1.2 var(--font-serif);
+    font: small-caps 600 1rem/1 var(--font-serif);
     letter-spacing: .06em;
     background:
         linear-gradient(var(--leader), var(--leader)) left 100%/0 1px no-repeat,
@@ -505,7 +504,7 @@ a:where(:hover, :focus-visible) {
 
 /* ------------------ Footer (left column only) ------------------ */
 footer {
-    margin: 0rem;
+    margin: 1rem 0 0;
     /* exact 1rem breathing room above; no forced bottom gap */
     color: var(--muted);
     padding: .75rem 1.2rem;
@@ -513,9 +512,10 @@ footer {
     border-radius: var(--r);
     background: var(--bg-softer);
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
-    font-size: .95rem;
-    line-height: 1.5;
-    font-family: var(--font-serif);
+
+    font: small-caps 700 1rem/1 var(--font-serif);
+    letter-spacing: .1em;
+    color: var(--accent-2);
 }
 
 /* ------------------ Mobile: single column + drawer ------------------ */
