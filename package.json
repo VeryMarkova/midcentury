@@ -1,10 +1,10 @@
 {
   "type": "module",
   "scripts": {
-    "start": "npx @11ty/eleventy --input=input --output=output --serve --watch",
-    "build": "npx @11ty/eleventy --input=input --output=output",
-    "clean": "rm -rf output",
-    "deploy": "npm run build && echo 'midcentury.now' > output/CNAME && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
+    "start": "npx @11ty/eleventy --input=input --output=whole --serve --watch",
+    "build": "npx @11ty/eleventy --input=input --output=whole",
+    "clean": "rm -rf whole",
+    "deploy": "npm run build && echo 'midcentury.now' > whole/CNAME && gh-pages -d whole -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

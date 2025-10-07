@@ -1,10 +1,8 @@
-// eleventy.config.js (ESM, clean, gh-pages aware)
+// eleventy.config.js (ESM, clean, Pages-at-root)
 import markdownIt from "markdown-it";
 import readingTime from "reading-time";
 
-const REPO = "very-markova-11ty-theme"; // change if you ever rename the repo
-const isProd = process.env.ELEVENTY_ENV === "production";
-const PATH_PREFIX = isProd ? `/${REPO}/` : "/";
+const PATH_PREFIX = "/";
 
 export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("eleventyComputed", {
@@ -27,7 +25,6 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("site", { pathPrefix: PATH_PREFIX });
 
   const WPM = 220;
-
   eleventyConfig.addFilter("rt", input => {
     const src = (input && typeof input === "object" && (input.templateContent || input.content)) || String(input ?? "");
     const minutes = Math.max(1, Math.ceil(readingTime(src, { wordsPerMinute: WPM }).minutes));
@@ -71,7 +68,7 @@ export default async function (eleventyConfig) {
   });
 
   return {
-    dir: { input: "input", output: "output", includes: "_includes", data: "_data" },
+    dir: { input: "input", output: "whole", includes: "_includes", data: "_data" },
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
     dataTemplateEngine: "njk",
