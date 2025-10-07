@@ -6,8 +6,9 @@
 
 /* ------------------ Tokens (richer default palette) ------------------ */
 :root {
+    --balm: #fffbf4;
     /* nudged warmer/darker for real contrast */
-    --paper: #efe6d6;
+    --paper: #ece2d0;
     --ink: #1e1916;
     --muted: #4f4841;
     --accent: #6a2f23;
@@ -32,10 +33,10 @@
     --h3: 1.5rem;
 
     /* slightly darker backgrounds for structure depth */
-    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
-    --bg-card: color-mix(in oklab, var(--paper) 85%, white);
-    --bg-card-2: color-mix(in oklab, var(--paper) 80%, white);
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
+    --bg-softer: color-mix(in oklab, var(--paper) 91%, var(--balm));
+    --bg-card: color-mix(in oklab, var(--paper) 85%, var(--balm));
+    --bg-card-2: color-mix(in oklab, var(--paper) 80%, var(--balm));
     --bg-sweet: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
         linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
         repeating-linear-gradient(to right,
@@ -172,7 +173,11 @@ button:where(:hover, :focus-visible),
 
 #buttons p {
     border: 0;
+    cursor: inherit;
     padding-top: .5rem;
+
+    font: small-caps 700 1rem/1 var(--font-serif);
+    color: var(--accent-2);
 }
 
 #buttons a:where(:hover, :focus-visible),
@@ -201,7 +206,7 @@ footer {
 
 /* ------------------ Headers ------------------ */
 #page-header {
-    padding: .9rem 1rem 1.2rem;
+    padding: 1rem;
     border: 1.5px solid var(--rule);
     border-radius: var(--r);
     background: var(--bg-softer);
@@ -216,16 +221,23 @@ footer {
 
 #meta {
     display: inline-block;
-    margin: .1rem 0 0rem;
+    margin: .0rem 0 0rem;
     /* fixed: was 'rem 0 .5rem' */
-    padding: .15rem 0rem 0em;
-    font: 400 1rem/var(--lh) var(--font-serif);
+    padding: 0rem 0em;
     letter-spacing: .1em;
-    text-transform: lowercase;
-    color: color-mix(in oklab, var(--accent-2) 82%, var(--ink));
-    background: color-mix(in oklab, var(--paper) 88%, white);
+    /*
+    color: color-mix(in oklab, var(--accent-2) 82%, var(--ink)); */
     border-radius: calc(var(--r) - 4px);
+    margin: .5rem 0 .0rem;
+    font: small-caps 700 1rem/1 var(--font-serif);
+    color: var(--accent-2);
+
 }
+
+
+
+
+
 
 #page-header[data-kind="essay"] #page-title {
     margin: 0 0 .0rem;
@@ -257,7 +269,7 @@ footer {
 /* Compact tweaks for phones */
 @media (max-width: 600px) {
     #page-header {
-        padding: .9rem .95rem 1rem;
+        padding: 1rem 0 1rem;
     }
 
     #page-header[data-kind="essay"] #page-title {
@@ -271,29 +283,22 @@ footer {
 
     #page-header .rule {
         height: 10px;
-        margin-top: .55rem;
+        margin: .5rem 0 .5rem;
     }
 }
 
 /* ===== Homepage masthead (site name, tag, spacer) ===== */
-#page-header:not([data-kind="essay"]) #site-name {
+#page-header[data-kind="home"] #site-name {
     margin: 0 0 .0rem;
     font-weight: 700;
     padding: 0;
-    font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
+    font-size: clamp(3.3rem, 2.1rem + 5.7vw, 5.1rem);
+
     line-height: 1.1;
     letter-spacing: .006em;
 }
 
-#page-header:not([data-kind="essay"]) #site-tag {
-    margin: 0 0 .5rem;
-    color: color-mix(in oklab, var(--muted) 90%, var(--ink));
-    font-style: italic;
-    font-size: 1.075rem;
-    line-height: 1.45;
-    letter-spacing: .015em;
-    max-width: 70ch;
-}
+
 
 /* ------------------ Content ------------------ */
 main article {
@@ -387,9 +392,9 @@ nav[data-nav="ledger"] {
 }
 
 nav[data-nav="ledger"] [data-sec] {
-    margin: .5rem 0 .25rem;
+    margin: .5rem 0 .0rem;
     font: small-caps 700 .9rem/1 var(--font-serif);
-    letter-spacing: .08em;
+    letter-spacing: .1em;
     color: var(--accent-2);
 }
 
@@ -404,6 +409,7 @@ nav[data-nav="ledger"] li {
     position: relative;
     counter-increment: item;
     padding-left: 2.2rem;
+    margin-top: .2em;
 }
 
 nav[data-nav="ledger"] li+li {
@@ -421,7 +427,7 @@ nav[data-nav="ledger"] li::before {
     color: var(--accent);
     border: 1px solid var(--rule);
     border-radius: 3px;
-    background: color-mix(in oklab, var(--paper) 90%, white);
+    background: color-mix(in oklab, var(--paper) 90%, var(--balm));
     padding: .2rem;
     transition: all .3s ease;
 }
@@ -535,7 +541,7 @@ footer {
 
 /* ------------------ Alternate palettes (light themes darkened slightly) ------------------ */
 html[data-theme="ink"] {
-    --paper: #e9dfce;
+    --paper: #d1c7b4;
     /* warmer, darker cream */
     --ink: #171310;
     /* stronger text contrast */
@@ -544,10 +550,10 @@ html[data-theme="ink"] {
     --accent-3: #a67414;
     --rule: #b9aa90;
 
-    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
-    --bg-card: color-mix(in oklab, var(--paper) 86%, white);
-    --bg-card-2: color-mix(in oklab, var(--paper) 81%, white);
+    --bg-soft: color-mix(in oklab, var(--paper) 80%, var(--balm));
+    --bg-softer: color-mix(in oklab, var(--paper) 80%, var(--balm));
+    --bg-card: color-mix(in oklab, var(--paper) 80%, var(--balm));
+    --bg-card-2: color-mix(in oklab, var(--paper) 80%, var(--balm));
 }
 
 html[data-theme="sage"] {
@@ -559,10 +565,10 @@ html[data-theme="sage"] {
     --accent-3: #927721;
     --rule: #b7bea6;
 
-    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-softer: color-mix(in oklab, var(--paper) 91%, white);
-    --bg-card: color-mix(in oklab, var(--paper) 85%, white);
-    --bg-card-2: color-mix(in oklab, var(--paper) 80%, white);
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
+    --bg-softer: color-mix(in oklab, var(--paper) 91%, var(--balm));
+    --bg-card: color-mix(in oklab, var(--paper) 85%, var(--balm));
+    --bg-card-2: color-mix(in oklab, var(--paper) 80%, var(--balm));
 }
 
 /* 1) Tokens: two small switches */
@@ -581,13 +587,13 @@ html[data-theme="noir"] {
     --accent-2: #c28c2d;
     --accent-3: #e6c067;
 
-    --bg-soft: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-softer: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-card: color-mix(in oklab, var(--paper) 90%, white);
-    --bg-card-2: color-mix(in oklab, var(--paper) 90%, white);
+    --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
+    --bg-softer: color-mix(in oklab, var(--paper) 90%, var(--balm));
+    --bg-card: color-mix(in oklab, var(--paper) 90%, var(--balm));
+    --bg-card-2: color-mix(in oklab, var(--paper) 90%, var(--balm));
 
     --lh: 1.5;
-    --focus: color-mix(in oklab, var(--accent) 70%, white);
+    --focus: color-mix(in oklab, var(--accent) 70%, var(--balm));
     --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
     --select-ink: var(--ink);
 
@@ -597,21 +603,25 @@ html[data-theme="noir"] {
 /* optional: auto-dark fallback when no data-theme is set */
 @media (prefers-color-scheme: dark) {
     html:not([data-theme]) {
-        --paper: #2f2b27;
+        --paper: #3b3024;
         --ink: #f3ede3;
         --muted: #bfb3a5;
         --rule: #5b5246;
+
         --accent: #d6a23a;
         --accent-2: #c28c2d;
         --accent-3: #e6c067;
-        --bg-soft: color-mix(in oklab, var(--paper) 88%, white);
-        --bg-softer: color-mix(in oklab, var(--paper) 84%, white);
-        --bg-card: color-mix(in oklab, var(--paper) 80%, white);
-        --bg-card-2: color-mix(in oklab, var(--paper) 72%, white);
+
+        --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
+        --bg-softer: color-mix(in oklab, var(--paper) 90%, var(--balm));
+        --bg-card: color-mix(in oklab, var(--paper) 90%, var(--balm));
+        --bg-card-2: color-mix(in oklab, var(--paper) 90%, var(--balm));
+
         --lh: 1.5;
-        --focus: color-mix(in oklab, var(--accent) 70%, white);
+        --focus: color-mix(in oklab, var(--accent) 70%, var(--balm));
         --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
         --select-ink: var(--ink);
+
         color-scheme: dark;
     }
 }
