@@ -4,7 +4,7 @@
     "start": "npx @11ty/eleventy --input=input --output=output --serve --watch",
     "build": "npx @11ty/eleventy --input=input --output=output",
     "clean": "rm -rf output",
-    "deploy": "npm run build && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
+    "deploy": "npm run build && echo 'www.midcentury.day' > output/CNAME && gh-pages -d output -b gh-pages -m \"deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

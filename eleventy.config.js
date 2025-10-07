@@ -47,7 +47,9 @@ export default async function (eleventyConfig) {
   eleventyConfig.setLibrary("md", md);
   eleventyConfig.addPairedShortcode("md", content => md.render(content));
   eleventyConfig.addFilter("md", str => md.render(str ?? ""));
-
+  eleventyConfig.addShortcode("formatDate", dateObj =>
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(dateObj)
+  );
   const { minify } = await import("html-minifier-terser");
   eleventyConfig.addTransform("htmlmin", async (content, outputPath) => {
     if (outputPath && outputPath.endsWith(".html")) {

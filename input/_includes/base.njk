@@ -5,6 +5,7 @@
 
 <body>{% include "header.njk" -%}
     <main id="content">
+
         <header id="page-header" {% if kind %} data-kind="{{ kind }}" {% endif %}>
             {% if kind == "essay" %}
             <h1 id="page-title">{{ title or site.title }}</h1>
