@@ -36,6 +36,8 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "input/css": "css" });
   eleventyConfig.addPassthroughCopy({ "input/js": "js" });
   eleventyConfig.addPassthroughCopy({ "input/favicon.ico": "favicon.ico" });
+  eleventyConfig.addPassthroughCopy({ "input/CNAME": "CNAME" });
+
 
   eleventyConfig.setNunjucksEnvironmentOptions({
     throwOnUndefined: false,
