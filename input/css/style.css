@@ -1,5 +1,5 @@
 /* ================== Very Markova — Midcentury CSS
-   (body-grid, mobile drawer, higher-contrast, zippy headers, no title underline) ================== */
+   (page-grid wrapper, mobile drawer, higher-contrast, zippy headers, no title underline) ================== */
 
 /* Fonts FIRST */
 @import url('https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap');
@@ -7,22 +7,20 @@
 /* ------------------ Tokens (richer default palette) ------------------ */
 :root {
     --balm: #fff;
-    /* nudged warmer/darker for real contrast */
     --paper: #ece2d0;
     --ink: #1e1916;
-    --muted: #4f4841;
+    --muted: #6e3802;
     --accent: #6a2f23;
     --accent-2: #155a49;
     --accent-3: #a57517;
     --rule: #bfae95;
 
-    /* UPDATED: Goudy needs air */
-    --lh: 1.6;
+    --lh: 1.4;
 
     --font-serif: "Sorts Mill Goudy", Garamond, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-    --maxw: 78rem;
+    --maxw: clamp(20rem, calc(100vw - 2rem), 78rem);
     --r: 10px;
 
     /* type scale */
@@ -37,7 +35,8 @@
     --bg-softer: color-mix(in oklab, var(--paper) 91%, var(--balm));
     --bg-card: color-mix(in oklab, var(--paper) 85%, var(--balm));
     --bg-card-2: color-mix(in oklab, var(--paper) 80%, var(--balm));
-    --bg-sweet: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
+    --bg-sweet:
+        linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
         linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
         repeating-linear-gradient(to right,
             color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
@@ -47,7 +46,6 @@
 /* rem baseline + language hint for hyphenation engines */
 html {
     font-size: 100%;
-    /* 1rem = 16px */
     hyphens: auto;
 }
 
@@ -60,41 +58,44 @@ html {
 html,
 body {
     height: auto;
-    /* was 100% */
     min-height: 100%;
 }
 
 /* ------------------ Base ------------------ */
 body {
-    display: grid;
-    grid-template-columns: 1fr clamp(15rem, 30%, 24rem);
-    grid-template-areas:
-        "buttons buttons"
-        "main    aside"
-        "footer  aside";
-    grid-template-rows: auto;
+    /* No grid here anymore. It's a respectable wrapper, not an overachiever. */
+    max-width: none;
+    margin: 0;
+    padding: 0;
 
-    align-items: start;
-    align-content: start;
-    /* prevent rows from stretching to fill viewport */
-    gap: 1rem;
-    max-width: var(--maxw);
-    margin-inline: auto;
-    padding: 1rem;
-
-    /* light mode background gets a subtle warm tint, not just gray haze */
     background:
         radial-gradient(1200px 600px at 18% -10%, color-mix(in oklab, var(--accent-3) 12%, transparent) 0, transparent 60%),
         radial-gradient(1000px 500px at 120% 10%, color-mix(in oklab, var(--accent) 8%, transparent) 0, transparent 55%),
         var(--paper);
     color: var(--ink);
 
-    /* UPDATED: rem sizing + unitless line-height for inheritance */
     font-family: var(--font-serif);
     font-size: var(--body-size);
     line-height: var(--lh);
     letter-spacing: .01em;
     text-rendering: optimizeLegibility;
+}
+
+/* The page content grid wrapper */
+.page-grid {
+    display: grid;
+    grid-template-columns: 1fr clamp(9rem, 20%, 16rem);
+    grid-template-areas:
+        "main    aside"
+        "footer  aside";
+    grid-template-rows: auto;
+    align-items: start;
+    align-content: start;
+    gap: 1rem;
+
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: 1rem;
 }
 
 /* Global text defaults: justified with sensible breaks */
@@ -123,30 +124,53 @@ p+p {
     }
 }
 
-/* ------------------ Toolbar ------------------ */
+/* ------------------ Toolbar (sits ABOVE .page-grid in the HTML) ------------------ */
 #buttons {
-    grid-area: buttons;
-    align-self: start;
+    /* Align with content gutters on wide screens */
+    max-inline-size: calc(var(--maxw) - 2rem);
+    /* 1rem + 1rem grid padding */
+    margin-inline: auto;
+    /* center like .page-grid */
+    padding-inline: 1rem;
+    /* same gutter as .page-grid */
+    padding-block: .5rem;
+    padding: .5rem 1rem;
     display: flex;
     flex-wrap: nowrap;
     gap: .5rem;
-    padding: .25rem .75rem;
-    margin: 0;
     border: 1px solid var(--rule);
     border-radius: var(--r);
     background: var(--bg-soft);
-    padding: .5rem 1rem;
-    overflow-x: auto;
-    scrollbar-width: thin;
 
     justify-content: flex-end;
     min-height: 0;
+}
+
+@media (max-width: 880px) {
+    #buttons {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        /* stick across the viewport */
+        width: 100%;
+        max-width: none;
+        /* full-bleed */
+        margin: 0;
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        border-radius: 0;
+        z-index: 300;
+        justify-content: center;
+    }
 }
 
 button,
 #buttons a {
     border-color: color-mix(in oklab, var(--rule) 78%, var(--ink));
     background: transparent;
+    text-transform: lowercase;
 }
 
 button:where(:hover, :focus-visible),
@@ -159,24 +183,24 @@ button:where(:hover, :focus-visible),
 #buttons button {
     appearance: none;
     cursor: pointer;
-    padding: .4rem .6rem .2rem .4rem;
+    height: auto;
     border: 1px solid color-mix(in oklab, var(--rule) 85%, var(--ink));
-    border-radius: var(--r);
+    border-radius: 5px;
     background: transparent;
+    text-align: center;
+    width: fit-content;
     text-decoration: none;
     color: var(--ink);
-    font: 400 1rem/1 var(--font-serif);
-    letter-spacing: .04em;
+    font: small-caps 700 1rem/ var(--lh) var(--font-serif);
+    letter-spacing: .1em;
     margin: 0;
+    padding: .2rem .5rem !important;
     white-space: nowrap;
 }
 
 #buttons p {
     border: 0;
     cursor: inherit;
-    padding-top: .5rem;
-
-    font: small-caps 700 1rem/1 var(--font-serif);
     color: var(--accent-2);
 }
 
@@ -185,7 +209,7 @@ button:where(:hover, :focus-visible),
     background: color-mix(in oklab, var(--accent-2) 8%, var(--bg-softer));
 }
 
-@media (min-width: 881px) {
+@media (min-width: 880px) {
     [data-hide-lg] {
         display: none !important;
     }
@@ -221,26 +245,16 @@ footer {
 
 #meta {
     display: inline-block;
-    margin: .0rem 0 0rem;
-    /* fixed: was 'rem 0 .5rem' */
-    padding: 0rem 0em;
+    margin: .5rem 0 0;
+    padding: 0;
     letter-spacing: .1em;
-    /*
-    color: color-mix(in oklab, var(--accent-2) 82%, var(--ink)); */
     border-radius: calc(var(--r) - 4px);
-    margin: .5rem 0 .0rem;
     font: small-caps 700 1rem/1 var(--font-serif);
     color: var(--accent-2);
-
 }
 
-
-
-
-
-
 #page-header[data-kind="essay"] #page-title {
-    margin: 0 0 .0rem;
+    margin: 0 0 0;
     font-weight: 700;
     padding: 0;
     font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
@@ -257,53 +271,23 @@ footer {
     line-height: 1.45;
 }
 
-
 #page-header .rule {
     height: 11px;
     margin: .5rem 0 1rem;
     background: var(--bg-sweet);
     mask: linear-gradient(to right, #000 0%, #000 40%, transparent);
-    opacity: .95;
+    opacity: .85;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Compact tweaks for phones */
-@media (max-width: 600px) {
+@media (max-width: 880px) {
     #page-header {
-        padding: 1rem 0 1rem;
+        padding: 1rem;
     }
 
     #page-header[data-kind="essay"] #page-title {
-        margin: 0 0 .0rem;
+        margin: 0 0 0;
         font-weight: 700;
-        padding: 0;
         font-size: clamp(2.2rem, 1.4rem + 3.8vw, 3.4rem);
         line-height: 1.1;
         letter-spacing: .006em;
@@ -317,16 +301,13 @@ footer {
 
 /* ===== Homepage masthead (site name, tag, spacer) ===== */
 #page-header[data-kind="home"] #site-name {
-    margin: 0 0 .0rem;
+    margin: 0 0 0;
     font-weight: 700;
     padding: 0;
     font-size: clamp(3.3rem, 2.1rem + 5.7vw, 5.1rem);
-
     line-height: 1.1;
     letter-spacing: .006em;
 }
-
-
 
 /* ------------------ Content ------------------ */
 main article {
@@ -339,20 +320,22 @@ main article {
 
 /* Headings: rem/ratio, not px */
 main h1 {
-    margin: .2rem 0 0rem;
+    margin: 0;
     padding: 0;
-    font-size: clamp(1.375rem, 1rem + 1.8vw, 1.9rem);
     line-height: 1.2;
 }
 
 main h2 {
-    margin: 1rem 0;
-    font-weight: 700;
-    font-size: var(--h2);
-    /* 2rem */
-    line-height: 1.3;
-    letter-spacing: .01em;
-    font-family: "Sorts Mill Goudy", "Goudy Bookletter 1911", serif;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-variant: small-caps;
+    letter-spacing: 0.1rem;
+    color: var(--ink);
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, var(--accent-3) 0%, transparent 100%) 1;
+    padding-bottom: .1rem;
+    margin: 2rem 0 1rem;
+    line-height: 1.2;
 }
 
 main h3 {
@@ -365,7 +348,7 @@ main h3 {
 }
 
 .lead {
-    margin: 0 0 0rem;
+    margin: 0 0 0;
     color: var(--muted);
     font-size: 1.0625rem;
     line-height: 1.5;
@@ -376,15 +359,12 @@ article p {
     padding: 0;
 }
 
-
-
 /* Cards and grids */
 [data-card] {
     padding: 0 1rem;
     border: 1px solid var(--rule);
     border-radius: var(--r);
     background: var(--bg-card);
-
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
@@ -395,7 +375,6 @@ article p {
     display: grid;
     gap: 1rem;
     grid-template-rows: min-content auto min-content;
-    /* cleaned duplicate */
     margin-top: 1rem;
 }
 
@@ -419,17 +398,16 @@ nav[data-nav="ledger"] {
     background: var(--bg-soft);
 }
 
-
 nav[data-nav="ledger"] [data-sec] {
     margin: .4rem 0 0.0rem;
-    font: small-caps 700 .9rem/1 var(--font-serif);
+    font: small-caps 700 1rem/var(--lh) var(--font-serif);
     letter-spacing: .1em;
     color: var(--accent-2);
 }
 
 nav[data-nav="ledger"] ol {
     list-style: none;
-    margin: 0rem 1rem 1rem;
+    margin: 0rem 0em 1rem;
     padding: 0;
     counter-reset: item;
 }
@@ -437,11 +415,9 @@ nav[data-nav="ledger"] ol {
 nav[data-nav="ledger"] li {
     position: relative;
     counter-increment: item;
-
     padding-left: 2rem;
     margin-top: .4rem;
 }
-
 
 nav[data-nav="ledger"] li::before {
     content: counter(item, decimal-leading-zero);
@@ -450,7 +426,7 @@ nav[data-nav="ledger"] li::before {
     top: .0rem;
     width: 1.6rem;
     text-align: center;
-    font: 700 .8rem/1 var(--font-mono);
+    font: 700 .8rem/var(--lh) var(--font-mono);
     color: var(--accent);
     border: 1px solid var(--rule);
     border-radius: 3px;
@@ -466,12 +442,13 @@ nav[data-nav="ledger"] a {
     position: relative;
     text-decoration: none;
     color: var(--ink);
-    font: small-caps 600 1rem/1 var(--font-serif);
+    font: small-caps 600 1rem/var(--lh) var(--font-serif);
     letter-spacing: .06em;
     background:
         linear-gradient(var(--leader), var(--leader)) left 100%/0 1px no-repeat,
         radial-gradient(var(--leader) 1px, transparent 1px) 0 100%/6px 2px repeat-x;
-    transition: background-size .3s ease,
+    transition:
+        background-size .3s ease,
         color .6s cubic-bezier(.25, .1, .25, 1),
         transform .6s ease;
 }
@@ -494,18 +471,54 @@ nav[data-nav="ledger"] a:active {
 }
 
 /* ------------------ Links and Text ------------------ */
+
 a {
-    color: var(--accent-2);
+    color: var(--accent-3);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-a:where(:hover, :focus-visible) {
+a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 3px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-3);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+
+    mask: linear-gradient(to right, #000 0%, #000 40%, transparent);
+}
+
+a:hover {
     color: var(--accent-3);
+}
+
+a:hover::after {
+    transform: scaleX(1);
+}
+
+nav a::after,
+#buttons a::after,
+.menu a::after {
+    content: none;
+}
+
+nav a,
+.menu a {
+    color: var(--ink);
+    text-decoration: none;
+    position: static;
+    transition: none;
 }
 
 /* ------------------ Footer (left column only) ------------------ */
 footer {
     margin: 1rem 0 0;
-    /* exact 1rem breathing room above; no forced bottom gap */
     color: var(--muted);
     padding: .75rem 1.2rem;
     border: 1.5px solid var(--rule);
@@ -513,17 +526,16 @@ footer {
     background: var(--bg-softer);
     box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
 
-    font: small-caps 700 1rem/1 var(--font-serif);
+    font: small-caps 700 1rem/ var(--lh) var(--font-serif);
     letter-spacing: .1em;
     color: var(--accent-2);
 }
 
 /* ------------------ Mobile: single column + drawer ------------------ */
 @media (max-width: 880px) {
-    body {
+    .page-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
-            "buttons"
             "main"
             "footer";
         /* aside becomes a drawer */
@@ -533,15 +545,14 @@ footer {
     aside {
         position: fixed;
         inset: 0 0 0 auto;
-        width: min(85vw, 24rem);
-        max-width: 24rem;
+        width: min(103.5rem, 30%, 24rem);
         height: 100dvh;
         overflow: auto;
         transform: translateX(100%);
         transition: transform .22s ease;
-        z-index: 60;
-        padding: 1rem;
-        border-left: 1.5px solid var(--rule);
+        z-index: 600;
+        padding: 2rem 1rem;
+        border-left: 1px solid var(--rule);
         background: var(--bg-softer);
         box-shadow: 0 1px 0 rgba(0, 0, 0, .06);
     }
@@ -557,7 +568,7 @@ footer {
         inset: 0;
         background: rgba(0, 0, 0, .2);
         backdrop-filter: blur(1px);
-        z-index: 50;
+        z-index: 500;
     }
 
     /* Sidebar isn't sticky when it's a drawer */
@@ -570,14 +581,11 @@ footer {
 /* ------------------ Alternate palettes (light themes darkened slightly) ------------------ */
 html[data-theme="ink"] {
     --paper: #e3d5ba;
-    /* warmer, darker cream */
     --ink: #171310;
-    /* stronger text contrast */
     --accent: #622c20;
     --accent-2: #165c4c;
     --accent-3: #a67414;
     --rule: #b9aa90;
-
     --bg-soft: color-mix(in oklab, var(--paper) 80%, var(--balm));
     --bg-softer: color-mix(in oklab, var(--paper) 80%, var(--balm));
     --bg-card: color-mix(in oklab, var(--paper) 80%, var(--balm));
@@ -586,31 +594,23 @@ html[data-theme="ink"] {
 
 html[data-theme="sage"] {
     --paper: #e4e6da;
-    /* deepened sage */
     --ink: #181611;
     --accent: #4c2d22;
     --accent-2: #2e5a47;
     --accent-3: #927721;
     --rule: #b7bea6;
-
     --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
     --bg-softer: color-mix(in oklab, var(--paper) 91%, var(--balm));
     --bg-card: color-mix(in oklab, var(--paper) 85%, var(--balm));
     --bg-card-2: color-mix(in oklab, var(--paper) 80%, var(--balm));
 }
 
-/* 1) Tokens: two small switches */
-/* light/default tokens stay first (your existing :root) */
-
-
 /* explicit noir theme — no nesting, just override */
 html[data-theme="noir"] {
-    /* ——— Dark neutral-brown base ——— */
     --paper: #3b3024;
     --ink: #f3ede3;
     --muted: #bfb3a5;
     --rule: #5b5246;
-
 
     --accent: #e6c067;
     --accent-2: #e6c067;
@@ -627,14 +627,6 @@ html[data-theme="noir"] {
     --select-ink: var(--ink);
 
     color-scheme: dark;
-
-    #page-header .rule {
-        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
-            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
-            repeating-linear-gradient(to right,
-                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
-                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
-    }
 }
 
 /* optional: auto-dark fallback when no data-theme is set */
@@ -644,31 +636,16 @@ html[data-theme="noir"] {
         --ink: #f3ede3;
         --muted: #bfb3a5;
         --rule: #5b5246;
-
         --accent: #e6c067;
         --accent-2: #e6c067;
         --accent-3: #e6c067;
-
         --bg-soft: color-mix(in oklab, var(--paper) 90%, var(--balm));
         --bg-softer: color-mix(in oklab, var(--paper) 90%, var(--balm));
         --bg-card: color-mix(in oklab, var(--paper) 90%, var(--balm));
         --bg-card-2: color-mix(in oklab, var(--paper) 90%, var(--balm));
-
-        --lh: 1.5;
         --focus: color-mix(in oklab, var(--accent) 70%, var(--balm));
         --select-bg: color-mix(in oklab, var(--accent) 30%, var(--paper));
         --select-ink: var(--ink);
-
         color-scheme: dark;
     }
-
-    #page-header .rule {
-        background: linear-gradient(var(--rule), var(--rule)) 0 2px/100% 1px no-repeat,
-            linear-gradient(var(--rule), var(--rule)) 0 8px/100% 1px no-repeat,
-            repeating-linear-gradient(to right,
-                color-mix(in oklab, var(--accent-3) 85%, transparent) 0 6px,
-                color-mix(in oklab, var(--muted) 45%, transparent) 6px 12px);
-    }
-
-
 }
